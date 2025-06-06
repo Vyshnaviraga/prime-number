@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prime Number Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            text-align: center;
+            padding: 40px;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        input, textarea, button {
+            padding: 8px;
+            width: 200px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Prime Number Generator</h2>
+
+    <table border="1">
+        <tr>
+            <td>Start</td>
+            <td><input type="number" id="start" placeholder="Start Range"></td>
+            <td>End</td>
+            <td><input type="number" id="end" placeholder="End Range"></td>
+        </tr>
+        <tr>
+            <td>Prime Numbers</td>
+            <td colspan="3"><textarea id="result" readonly></textarea></td>
+        </tr>
+        <tr>
+            <td colspan="4"><button onclick="generatePrimes()">Generate</button></td>
+        </tr>
+    </table>
+
+    <script>
+        function isPrime(num) {
+            if (num <= 1) return false;
+            if (num === 2) return true;
+            if (num % 2 === 0) return false;
+            for (let i = 3; i <= Math.sqrt(num); i += 2) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+
+        function generatePrimes() {
+            const start = parseInt(document.getElementById("start").value);
+            const end = parseInt(document.getElementById("end").value);
+            const resultArea = document.getElementById("result");
+
+            if (isNaN(start) || isNaN(end)) {
+                resultArea.value = "Please enter valid start and end numbers.";
+                return;
+            }
+
+            if (start > end) {
+                resultArea.value = "Start number must be less than or equal to end number.";
+                return;
+            }
+
+            let primes = [];
+            for (let i = start; i <= end; i++) {
+                if (isPrime(i)) {
+                    primes.push(i);
+                }
+            }
+
+            resultArea.value = primes.length ? primes.join(", ") : "No prime numbers found in this range.";
+        }
+    </script>
+
+</body>
+</html>
